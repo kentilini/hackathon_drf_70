@@ -9,7 +9,8 @@ from person import Person
 from telebot import types
 
 API_TOKEN = '277757979:AAEPrc9yqbSfZkQHti5q8Q0c8F0M-ttlbQs'
-HELP_MESSAGE = "Пришлите мне фотографию преподователя МФТИ и я попытаюсь определить кто это."
+HELP_MESSAGE = "Пришлите мне фотографию преподователя МФТИ и я попытаюсь определить кто это. \n" \
+               "А ещё Вы можете прислать мне имя преподователя и я попробую найти информацию о нём."
 
 bot = telebot.TeleBot(API_TOKEN)
 logger = telebot.logger
