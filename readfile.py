@@ -57,10 +57,14 @@ def read_data_from_file(aFile):
 
 def get_best_match(img_path):
     results = np.array(compare_image_with_data(img_path))
-#    print results    
+    print results    
     ind = np.argpartition(results, 9)[:10]
     ind = ind[np.argsort(results[ind])]
     print ind
+
+    if results[ind[0]] > 0.3:
+        return None
+
     data = []
  
     for i in ind:
