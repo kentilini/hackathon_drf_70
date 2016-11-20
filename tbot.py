@@ -26,6 +26,7 @@ def send_welcome(query):
     r2 = types.InlineQueryResultArticle('2', 'Result2', types.InputTextMessageContent('Result message2.'))
     bot.answer_inline_query(query.id, [r, r2])
 
+
 @bot.message_handler(func=lambda message: True)
 def search(message):
     result = search_for(message.text)
@@ -36,13 +37,13 @@ def search(message):
 
     if len(result) == 1:
         person_map = result[0]
-        person = Person(person_map['name'],
-               person_map.get('link', 'Not Provided'),
-               person_map.get('knowledge', 'Not Provided'),
-               person_map.get('teaching_skills', 'Not Provided'),
-               person_map.get('in_person', 'Not Provided'),
-               person_map.get('how_easy', 'Not Provided'),
-               person_map.get('total', 'Not Provided'))
+        person = Person(person_map.get('name', 'Not Provided'),
+                        person_map.get('link', 'Not Provided'),
+                        person_map.get('knowledge', 'Not Provided'),
+                        person_map.get('teaching_skills', 'Not Provided'),
+                        person_map.get('in_person', 'Not Provided'),
+                        person_map.get('how_easy', 'Not Provided'),
+                        person_map.get('total', 'Not Provided'))
         bot.send_message(message.chat.id, person.get_string())
         return
 
@@ -65,13 +66,13 @@ def handle_docs_photo(message):
     best_match = readfile.get_best_match(path)
     print best_match
     person_map = webparser.get_prep_by_path(best_match.get(u"url"), best_match.get(u"name"))
-    person = Person(person_map['name'],
-                    person_map['link'],
-                    person_map['knowledge'],
-                    person_map['teaching_skills'],
-                    person_map['in_person'],
-                    person_map['how_easy'],
-                    person_map['total'])
+    person = Person(person_map.get('name', 'Not Provided'),
+                    person_map.get('link', 'Not Provided'),
+                    person_map.get('knowledge', 'Not Provided'),
+                    person_map.get('teaching_skills', 'Not Provided'),
+                    person_map.get('in_person', 'Not Provided'),
+                    person_map.get('how_easy', 'Not Provided'),
+                    person_map.get('total', 'Not Provided'))
     bot.reply_to(message, person.get_string())
 
     # except Exception as e:
@@ -84,7 +85,9 @@ def handle_docs_photo(message):
 def get_answer():
     return
 
+
 def search_for(search_string):
     return webparser.get_prep_property_list(search_string)
+
 
 bot.polling(none_stop=True, interval=3, timeout=3)
