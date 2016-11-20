@@ -4,7 +4,7 @@ from lxml import html
 
 
 def get_prep_list(name):
-    url = "http://wikimipt.org/index.php?search=" + urllib.quote(name)
+    url = "http://wikimipt.org/index.php?search=" + urllib.quote(name.encode('utf8'))
     str = urllib.urlopen(url).read()
     page = html.fromstring(str)
     xpath_str = "            // * [ @ id = 'mw-content-text'] / div / ul[1] / li[1] / div[1] / a"
@@ -31,17 +31,17 @@ def get_prep_property_list(prep_name):
     list = get_prep_list(prep_name)
     result = []
     for i in range(0, len(list)):
-        prep = []
-        prep.append(['name', list[i][0]])
-        prep.append(['link', list[i][1]])
+        prep = {}
+        prep['name'] = list[i][0]
+        prep['link'] = list[i][1]
 
         additional_props = get_prep_property(list[i][1])
-        print additional_props
-        prep.append(['knowledge', additional_props[0][1]])
-        prep.append(['teaching_skills', additional_props[1][1]])
-        prep.append(['in_person', additional_props[2][1]])
-        prep.append(['how_easy', additional_props[3][1]])
-        prep.append(['total', additional_props[4][1]])
+        #print additional_props
+        prep['knowledge'] = additional_props[0][1]
+        prep['teaching_skills'] = additional_props[1][1]
+        prep['in_person'] = additional_props[2][1]
+        prep['how_easy'] = additional_props[3][1]
+        prep['total'] = additional_props[4][1]
 
         result.append(prep)
     return result

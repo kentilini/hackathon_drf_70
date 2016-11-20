@@ -69,6 +69,6 @@ def get_answer():
     return
 
 def search_for(search_string):
-    return webparser.get_prep_list(search_string)
+    return webparser.get_prep_property_list(search_string)
 
 bot.polling(none_stop=True, interval=3, timeout=3)
