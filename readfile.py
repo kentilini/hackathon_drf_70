@@ -50,7 +50,7 @@ def main():
 
 def read_data_from_file(aFile):
     if not os.path.isfile(aFile):
-    print_images_data(images_dir, aFile)
+        print_images_data(images_dir, aFile)
     with open(aFile) as file:
         data = [split([float(digit) for digit in line.split()],128) for line in file]
     return data
