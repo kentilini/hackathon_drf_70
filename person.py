@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class Person:
     def __init__(self, name, link, knowledge, teaching_skills, in_person, how_easy, total):
         self.name = name

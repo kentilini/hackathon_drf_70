@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 import telebot
 import logging
 import uuid
+import webparser
 from person import Person
 from telebot import types
 
@@ -24,7 +26,7 @@ def send_welcome(query):
     bot.answer_inline_query(query.id, [r, r2])
 
 @bot.message_handler(func=lambda message: True)
-def echo_message(message):
+def search(message):
     result = search_for(message.text)
     markup = types.InlineKeyboardMarkup(3)
     markup.row(types.InlineKeyboardButton(text="Смотреть все результаты",
@@ -57,12 +59,6 @@ def get_answer():
                     4.57)
 
 def search_for(search_string):
-    return Person("Овчинкин Владимир Александрович",
-                  "http://wikimipt.org/wiki/%D0%9E%D0%B2%D1%87%D0%B8%D0%BD%D0%BA%D0%B8%D0%BD_%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D0%BE%D0%B2%D0%B8%D1%87",
-                    4.48,
-                    4.63,
-                    4.09,
-                    3.52,
-                    4.57)
+    return webparser.get_prep_list(search_string)
 
 bot.polling(none_stop=True, interval=3, timeout=3)
