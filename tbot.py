@@ -29,6 +29,7 @@ def send_welcome(query):
 @bot.message_handler(func=lambda message: True)
 def search(message):
     result = search_for(message.text)
+    print result
     if len(result) == 0:
         bot.send_message(message.chat.id, "Ничего не найдено.")
         return
