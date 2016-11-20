@@ -23,11 +23,12 @@ def get_prep_property(path):
     str = urllib.urlopen(path).read()
     page = html.fromstring(str)
     property_list = []
-    for i in range(1, 6):
-        xpath_prop_name = "//*[@id='mw-content-text']/table/tr[8]/td/table/tr[" + `i` + "]/td[1]"
-        xpath_prop_value = "//*[@class = 'starrating-avg']"
-	if len(page.xpath(xpath_prop_name)) > 0 and len(page.xpath(xpath_prop_value)) > i:
-            property_list.append( [page.xpath(xpath_prop_name)[0].text, page.xpath(xpath_prop_value)[i-1].text] )
+    xpath_prop_value = "//*[@class = 'starrating-avg']"
+    print len(page.xpath(xpath_prop_value))
+    if len(page.xpath(xpath_prop_value)) == 5:
+#        print page.xpath(xpath_prop_value)[0].xpath('/text()')
+        for prop in page.xpath(xpath_prop_value):
+            property_list.append(prop.text) 
     return property_list
 
 def get_prep_by_path(link, name):
@@ -38,11 +39,11 @@ def get_prep_by_path(link, name):
     additional_props = get_prep_property(link)
     print additional_props
     if len(additional_props) > 4:
-        prep['knowledge'] = additional_props[0][1]
-        prep['teaching_skills'] = additional_props[1][1]
-        prep['in_person'] = additional_props[2][1]
-        prep['how_easy'] = additional_props[3][1]
-        prep['total'] = additional_props[4][1]
+        prep['knowledge'] = additional_props[0]
+        prep['teaching_skills'] = additional_props[1]
+        prep['in_person'] = additional_props[2]
+        prep['how_easy'] = additional_props[3]
+        prep['total'] = additional_props[4]
     return prep
 
 def get_prep_property_list(prep_name):
@@ -56,11 +57,11 @@ def get_prep_property_list(prep_name):
         additional_props = get_prep_property(list[i][1])
         #print additional_props
         if len(additional_props) > 4:
-            prep['knowledge'] = additional_props[0][1]
-            prep['teaching_skills'] = additional_props[1][1]
-            prep['in_person'] = additional_props[2][1]
-            prep['how_easy'] = additional_props[3][1]
-            prep['total'] = additional_props[4][1]
+            prep['knowledge'] = additional_props[0]
+            prep['teaching_skills'] = additional_props[1]
+            prep['in_person'] = additional_props[2]
+            prep['how_easy'] = additional_props[3]
+            prep['total'] = additional_props[4]
 
         result.append(prep)
     return result
