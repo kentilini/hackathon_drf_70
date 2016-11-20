@@ -4,6 +4,7 @@ import logging
 import uuid
 import webparser
 import readfile
+import traceback
 from person import Person
 from telebot import types
 
@@ -84,6 +85,7 @@ def handle_docs_photo(message):
         bot.reply_to(message, person.get_string())
 
     except Exception as e:
+        traceback.print_exc()
         error_uuid = uuid.uuid1()
         logger.error(str(e) + " " + str(error_uuid))
         bot.reply_to(message, "К сожалению мне не удалось обработать ваш запрос по технической причине, " +
