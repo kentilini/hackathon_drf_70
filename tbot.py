@@ -22,7 +22,8 @@ def send_welcome(message):
 
 @bot.inline_handler(func=lambda query: True)
 def send_welcome(query):
-    result = search_for(query.query)
+    last_space_pos = query.query.rfind(" ")
+    result = search_for(query.query[:last_space_pos])
     arr = []
     id = 0
     for person in result:
@@ -68,6 +69,9 @@ def handle_docs_photo(message):
         f.close()
 
         best_match = readfile.get_best_match(path)
+        if best_match is None:
+            bot.reply_to(message, "К сожалению мы не можем узнать этого человека.")
+            return
         print best_match
         person_map = webparser.get_prep_by_path(best_match.get(u"url"), best_match.get(u"name"))
         person = Person(person_map.get('name', 'Not Provided'),
