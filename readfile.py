@@ -50,7 +50,7 @@ def main():
 
 def read_data_from_file(aFile):
     if not os.path.isfile(aFile):
-	print_images_data(images_dir, aFile)
+    print_images_data(images_dir, aFile)
     with open(aFile) as file:
         data = [split([float(digit) for digit in line.split()],128) for line in file]
     return data
@@ -64,9 +64,9 @@ def get_best_match(img_path):
     data = []
  
     for i in ind:
-    	fPath = json_path_pattern.format(i)
-    	with open(fPath) as data_file:
-        	data.append(json.load(data_file))
+        fPath = json_path_pattern.format(i)
+        with open(fPath) as data_file:
+            data.append(json.load(data_file))
     return data[0]
 
 def compare_image_with_data(img_path):

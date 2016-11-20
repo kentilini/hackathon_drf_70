@@ -54,31 +54,31 @@ def search(message):
 
 @bot.message_handler(content_types=['photo'])
 def handle_docs_photo(message):
-    try:
-        file_info = bot.get_file(message.photo[len(message.photo) - 1].file_id)
-        attached_file = bot.download_file(file_info.file_path)
-        path = str(uuid.uuid1())
-        f = open(path, "wb")
-        f.write(attached_file)
-        f.close()
+    # try:
+    file_info = bot.get_file(message.photo[len(message.photo) - 1].file_id)
+    attached_file = bot.download_file(file_info.file_path)
+    path = str(uuid.uuid1())
+    f = open(path, "wb")
+    f.write(attached_file)
+    f.close()
 
-        best_match = readfile.get_best_match(path)
-        print best_match
-        person_map = webparser.get_prep_by_path(best_match.get(u"url"), best_match.get(u"name"))
-        person = Person(person_map['name'],
-                        person_map['link'],
-                        person_map['knowledge'],
-                        person_map['teaching_skills'],
-                        person_map['in_person'],
-                        person_map['how_easy'],
-                        person_map['total'])
-        bot.reply_to(message, person.get_string())
+    best_match = readfile.get_best_match(path)
+    print best_match
+    person_map = webparser.get_prep_by_path(best_match.get(u"url"), best_match.get(u"name"))
+    person = Person(person_map['name'],
+                    person_map['link'],
+                    person_map['knowledge'],
+                    person_map['teaching_skills'],
+                    person_map['in_person'],
+                    person_map['how_easy'],
+                    person_map['total'])
+    bot.reply_to(message, person.get_string())
 
-    except Exception as e:
-        error_uuid = uuid.uuid1()
-        logger.error(str(e) + " " + str(error_uuid))
-        bot.reply_to(message, "К сожалению мне не удалось обработать ваш запрос по технической причине, " +
-                     "вашей проблеме присовен уникальный идентификатор: " + str(error_uuid))
+    # except Exception as e:
+    #     error_uuid = uuid.uuid1()
+    #     logger.error(str(e) + " " + str(error_uuid))
+    #     bot.reply_to(message, "К сожалению мне не удалось обработать ваш запрос по технической причине, " +
+    #                  "вашей проблеме присовен уникальный идентификатор: " + str(error_uuid))
 
 
 def get_answer():
