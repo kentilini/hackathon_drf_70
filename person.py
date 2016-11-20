@@ -11,10 +11,10 @@ class Person:
         self.total = total
 
     def get_string(self):
-        return "Я считаю, что это " + self.name + \
+        return "Я считаю, что это " + str(self.name) + \
                "\nЗнания: " + str(self.knowledge) + \
                "\nНавыки преподавания: " + str(self.teaching_skills) + \
                "\nВ общении: " + str(self.in_person) + \
                "\nХалявность: " + str(self.how_easy) + \
                "\nСуммарно: " + str(self.total) + \
-               "\nПодробнее можно узнать по ссылке: " + str(self.link.decode)
+               "\nПодробнее можно узнать по ссылке: " + str(self.link)
