@@ -62,7 +62,14 @@ def handle_docs_photo(message):
         f.write(attached_file)
 
         best_match = readfile.get_best_match(path)
-        best_match['url']
+        person_map = webparser.get_prep_by_path(best_match['url'], best_match['name'])
+        person = Person(person_map['name'],
+                        person_map['link'],
+                        person_map['knowledge'],
+                        person_map['teaching_skills'],
+                        person_map['in_person'],
+                        person_map['how_easy'],
+                        person_map['total'])
         bot.reply_to(message, person.get_string())
 
     except Exception as e:
