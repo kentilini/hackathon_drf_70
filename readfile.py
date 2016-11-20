@@ -67,7 +67,7 @@ def get_best_match(img_path):
     	fPath = json_path_pattern.format(i)
     	with open(fPath) as data_file:
         	data.append(json.load(data_file))
-    return data
+    return data[0]
 
 def compare_image_with_data(img_path):
     image_rep = get_rep(img_path)

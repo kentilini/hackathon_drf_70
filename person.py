@@ -11,7 +11,7 @@ class Person:
         self.total = total
 
     def get_string(self):
-        return u"Я считаю, что это " + self.name + \
+        return self.name + \
                u"\nЗнания: " + self.knowledge + \
                u"\nНавыки преподавания: " + self.teaching_skills + \
                u"\nВ общении: " + self.in_person + \

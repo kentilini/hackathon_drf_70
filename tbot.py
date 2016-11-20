@@ -3,6 +3,7 @@ import telebot
 import logging
 import uuid
 import webparser
+import readfile
 from person import Person
 from telebot import types
 
@@ -55,8 +56,12 @@ def handle_docs_photo(message):
     try:
         file_info = bot.get_file(message.photo[len(message.photo) - 1].file_id)
         attached_file = bot.download_file(file_info.file_path)
+        path = str(uuid.uuid1())
+        f = open(str(uuid.uuid1()), "wb")
+        f.write(attached_file)
 
-        person = get_answer()
+        best_match = readfile.get_best_match(path)
+        best_match['url']
         bot.reply_to(message, person.get_string())
 
     except Exception as e:
