@@ -25,7 +25,7 @@ def get_prep_property(path):
     property_list = []
     for i in range(1, 6):
         xpath_prop_name = "//*[@id='mw-content-text']/table/tr[8]/td/table/tr[" + `i` + "]/td[1]"
-        xpath_prop_value = "//table[contains(@class, 'wikitable')]//table[.//td  = ' Знания ']//tr[" + `i` + "]/td[2]/div/span[contains(@class, 'starrating-avg')]"
+        xpath_prop_value = "//table[contains(@class, 'wikitable')]//table[.//td  = u' Знания ']//tr[" + `i` + "]/td[2]/div/span[contains(@class, 'starrating-avg')]"
 	if len(page.xpath(xpath_prop_name)) > 0 and len(page.xpath(xpath_prop_value)) > 0:
             property_list.append( [page.xpath(xpath_prop_name)[0].text, page.xpath(xpath_prop_value)[0].text] )
     return property_list
