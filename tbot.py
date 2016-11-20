@@ -60,6 +60,7 @@ def handle_docs_photo(message):
         path = str(uuid.uuid1())
         f = open(str(uuid.uuid1()), "wb")
         f.write(attached_file)
+        f.close()
 
         best_match = readfile.get_best_match(path)
         person_map = webparser.get_prep_by_path(best_match['url'], best_match['name'])
