@@ -27,9 +27,9 @@ def send_welcome(query):
 def echo_message(message):
     result = search_for(message.text)
     markup = types.InlineKeyboardMarkup(3)
-    markup.row(types.InlineKeyboardButton(text="Найдено несколько подходящих записей.\nСмотреть все результаты",
+    markup.row(types.InlineKeyboardButton(text="Смотреть все результаты",
                                           switch_inline_query_current_chat=result.name))
-    bot.send_message(message.chat.id, result.get_string(), reply_markup=markup)
+    bot.send_message(message.chat.id, "Найдено несколько подходящих записей.\n", reply_markup=markup)
 
 
 @bot.message_handler(content_types=['photo'])
