@@ -22,9 +22,13 @@ def send_welcome(message):
 
 @bot.inline_handler(func=lambda query: True)
 def send_welcome(query):
-    r = types.InlineQueryResultArticle('1', 'Result', types.InputTextMessageContent('Result message.'))
-    r2 = types.InlineQueryResultArticle('2', 'Result2', types.InputTextMessageContent('Result message2.'))
-    bot.answer_inline_query(query.id, [r, r2])
+    result = search_for(query.query)
+    arr = []
+    id = 0
+    for person in result:
+        arr.append(types.InlineQueryResultArticle(str(id), person['name'], types.InputTextMessageContent(person['name'])))
+        id += 1
+    bot.answer_inline_query(query.id, arr)
 
 
 @bot.message_handler(func=lambda message: True)
