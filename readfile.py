@@ -10,13 +10,14 @@ import openface
 import sys
 import getopt
 import json
+import math
 
 np.set_printoptions(precision=2)
 
 align = openface.AlignDlib("shape_predictor_68_face_landmarks.dat")
 net = openface.TorchNeuralNet("nn4.small2.v1.t7", 96)
-images_dir = '../images/preps/'
-json_path_pattern = '../images/preps/{}/data.json'
+images_dir = './images/preps/'
+json_path_pattern = './images/preps/{}/data.json'
 
 def get_rep(img_path):
     bgr_img = cv2.imread(img_path)
@@ -43,21 +44,21 @@ def main():
         sys.exit(2)
     #data = read_data_from_file(args[0])
 
+    get_best_match(args[0])
 
-    print get_best_match(args[1])
 #    print_images_data(images_dir)
 
 def read_data_from_file(aFile):
     if not os.path.isfile(aFile):
 	print_images_data(images_dir, aFile)
     with open(aFile) as file:
-        data = [split([float(digit) for digit in line.split()],128) for line in file][:-1]
+        data = [split([float(digit) for digit in line.split()],128) for line in file]
     return data
 
 def get_best_match(img_path):
     results = np.array(compare_image_with_data(img_path))
-    print results    
-    ind = np.argpartition(results, 4)[:4]
+#    print results    
+    ind = np.argpartition(results, 9)[:10]
     ind = ind[np.argsort(results[ind])]
     print ind
     data = []
@@ -70,7 +71,19 @@ def get_best_match(img_path):
 
 def compare_image_with_data(img_path):
     image_rep = get_rep(img_path)
-    return [np.dot(el[0] - image_rep, el[0] - image_rep) for el in data] 
+
+#    print 'image distance ', 
+#    print image_rep
+
+    result = []
+    for vect in data:
+        sum = 0
+        for el in vect[1:]:
+            sum += math.sqrt(np.dot(image_rep - el, image_rep - el))
+        result.append(sum/(len(vect)-1))
+
+   # return [np.dot(el[0] - image_rep, el[0] - image_rep) for el in data] 
+    return result
 
 def split(arr, size):
      arrs = []
@@ -89,6 +102,7 @@ def print_images_data(dir_path, output):
 
     print only_dirs
     for dir in only_dirs:
+        print dir
         everage, aList = get_folder_everage(os.path.join(dir_path,dir))
         for el in everage:
             out_f.write(str(el))
@@ -106,7 +120,7 @@ def get_folder_everage(dir_path):
     count = 0;
     aList = [];
     for dirpath,_,files in os.walk(dir_path):
-        filenames = [ file for file in files if os.path.join(dirpath, file).endswith( ('.jpg') ) ] 
+        filenames = [ file for file in files if not os.path.join(dirpath, file).endswith( ('.json') ) ] 
         
  #       print files
  #       print filenames
