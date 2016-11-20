@@ -17,4 +17,4 @@ class Person:
                "\nВ общении: " + str(self.in_person) + \
                "\nХалявность: " + str(self.how_easy) + \
                "\nСуммарно: " + str(self.total) + \
-               "\nПодробнее можно узнать по ссылке: " + self.link
+               "\nПодробнее можно узнать по ссылке: " + str(self.link.decode)
