@@ -22,13 +22,13 @@ def send_welcome(message):
 
 @bot.inline_handler(func=lambda query: True)
 def send_welcome(query):
-    last_space_pos = query.query.rfind(" ")
-    result = search_for(query.query[:last_space_pos])
+    result = search_for(query.query)
     arr = []
-    id = 0
+    id = 1
     for person in result:
         arr.append(types.InlineQueryResultArticle(str(id), person['name'], types.InputTextMessageContent(person['name'])))
         id += 1
+        print arr
     bot.answer_inline_query(query.id, arr)
 
 

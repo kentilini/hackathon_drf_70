@@ -62,7 +62,7 @@ def get_best_match(img_path):
     ind = ind[np.argsort(results[ind])]
     print ind
 
-    if results[ind[0]] > 0.3:
+    if results[ind[0]] > 0.925:
         return None
 
     data = []

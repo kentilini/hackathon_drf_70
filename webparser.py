@@ -4,7 +4,7 @@ from lxml import html
 
 
 def get_prep_list(name):
-    url = "http://wikimipt.org/index.php?search=" + urllib.quote(name.encode('utf8'))
+    url = "http://wikimipt.org/index.php?fulltext=Search&search=" + urllib.quote(name.encode('utf8'))
     str = urllib.urlopen(url).read()
     page = html.fromstring(str)
     xpath_str = "//div[@class='searchresults']/ul[1]//div[@class='mw-search-result-heading']/a" 
